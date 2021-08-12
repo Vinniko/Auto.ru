@@ -1,0 +1,48 @@
+{% extends 'layout/main.html.twig' %}
+
+{% block body %}
+    <div class="filter-container">
+        <form action="../../sale/edit" class="row g-3 needs-validation" method="POST" validate>
+            <input type="hidden" name="id" {% if sale %} value="{{ sale.getId }}" {% endif %}/>
+            <div class="col-md-4">
+                <label for="validationCustom01" class="form-label">Марка</label>
+                <input type="text" class="form-control" id="validationCustom01"
+                       name="mark" {% if sale %} value="{{ sale.getAuto.getMark }}" {% endif %}>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustom02" class="form-label">Дата производства</label>
+                <input type="date" class="form-control" id="validationCustom02"
+                       name="build_date" {% if sale %} value="{{ sale.getAuto.getBuildYear.format('Y-m-d') }}" {% endif %}>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustom03" class="form-label">Страна</label>
+                <input type="text" class="form-control" id="validationCustom03"
+                       name="country" {% if sale %} value="{{ sale.getAuto.getCountry.getTitle }}" {% endif %}>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustom04" class="form-label">Цена</label>
+                <input type="number" step="0.01" class="form-control" id="validationCustom03"
+                       name="price" {% if sale %} value="{{ sale.getPrice }}" {% endif %}>
+            </div>
+            <div class="col-11">
+                <button class="btn btn-primary" type="submit" {% if not sale %} disabled {% endif %}>Обновить</button>
+            </div>
+        </form>
+        <div class="col-12">
+            {% if message != null %}
+                <div class="alert alert-primary" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-12">
+            {% if error != null %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}

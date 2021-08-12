@@ -1,0 +1,88 @@
+{% extends 'layout/main.html.twig' %}
+
+{% block body %}
+    <div class="filter-container">
+        <form action="../sale/index" class="row g-3 needs-validation" method="GET" validate>
+            <div class="col-md-2">
+                <label for="validationCustom01" class="form-label">Марка</label>
+                <input type="text" class="form-control" id="validationCustom01" name="mark" value="{{ mark }}">
+            </div>
+            <div class="col-md-2">
+                <label for="validationCustom02" class="form-label">Мин. дата</label>
+                <input type="date" class="form-control" id="validationCustom02" name="start_date"
+                       value="{{ start_date }}">
+            </div>
+            <div class="col-md-2">
+                <label for="validationCustom03" class="form-label">Макс. дата</label>
+                <input type="date" class="form-control" id="validationCustom03" name="end_date" value="{{ end_date }}">
+            </div>
+            <div class="col-md-2">
+                <label for="validationCustom04" class="form-label">Страна</label>
+                <input type="text" class="form-control" id="validationCustom03" name="country" value="{{ country }}">
+            </div>
+            <div class="col-md-2">
+                <label for="validationCustom05" class="form-label">Мин. цена</label>
+                <input type="text" class="form-control" id="validationCustom03" name="start_price"
+                       value="{{ start_price }}">
+            </div>
+            <div class="col-md-2">
+                <label for="validationCustom06" class="form-label">Макс. цена</label>
+                <input type="text" class="form-control" id="validationCustom03" name="end_price"
+                       value="{{ end_price }}">
+            </div>
+            <div class="col-11">
+                <button class="btn btn-primary" type="submit">Применить фильтры</button>
+            </div>
+            <div class="col-1">
+                <a class="btn btn-primary" href="../sale/index">Отменить</a>
+            </div>
+        </form>
+    </div>
+    <div class="col-12">
+        {% if message != null %}
+            <div class="alert alert-primary" role="alert">
+                {{ message }}
+            </div>
+        {% endif %}
+    </div>
+    <div class="col-12">
+        {% if error != null %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+    </div>
+    {% if not error %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Марка</th>
+                <th scope="col">Год выпуска</th>
+                <th scope="col">Страна производителя</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Редактировать</th>
+                <th scope="col">Удалить</th>
+            </tr>
+            </thead>
+            {% for sale in sales %}
+                <tbody>
+                <tr>
+                    <th scope="row"><a href="/sale/get/{{ sale.getId }}">{{ sale.getId }}</a></th>
+                    <td><a href="/sale/get/{{ sale.getId }}">{{ sale.getAuto.getMark }}</a></td>
+                    <td><a href="/sale/get/{{ sale.getId }}">{{ sale.getAuto.getBuildYear.format('Y-m-d') }}</a></td>
+                    <td><a href="/sale/get/{{ sale.getId }}">{{ sale.getAuto.getCountry.getTitle }}</a></td>
+                    <td><a href="/sale/get/{{ sale.getId }}">{{ sale.getPrice }}</a></td>
+                    <td><a href="/sale/update/{{ sale.getId }}"><img src="../icons/pencil-fill.svg"/></a></td>
+                    <td>
+                        <form action="/sale/delete" method="post"><input value="{{ sale.getId }}" name="id" hidden>
+                            <button class="btn" type="submit"><img src="../icons/x-square-fill.svg"/></button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'layout/main.html.twig' %}
+
+{% block body %}
+
+    <div class="col-12">
+        {% if message != null %}
+            <div class="alert alert-primary" role="alert">
+                {{ message }}
+            </div>
+        {% endif %}
+    </div>
+    <div class="col-12">
+        {% if error != null %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+    </div>
+    {% if sale and not error %}
+    <div class="sale-container d-flex justify-content-center">
+        <div class="card border-primary mb-2" style="max-width: 40rem;">
+            <div class="card-header">{{ sale.getAuto.getMark }}</div>
+            <div class="card-body text-primary">
+                <h5 class="card-title">Продажа</h5>
+                <p class="card-text">Продается {{ sale.getAuto.getMark }} - {{ sale.auto.getBuildYear.format('Y-m-d') }}
+                    года выпуска. Страна производства: {{ sale.getAuto.getCountry.getTitle }}</p>
+                <p class="card-text">Цена: {{ sale.getPrice }} рублей</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock %}
