@@ -2,14 +2,15 @@
 
 ## Installation
 
-```bash
-composer install
-```
-
 Copy .env from .env.example file and then write your database config
 
 ```bash
 cp .env.example .env
+```
+Run composer install
+
+```bash
+composer install
 ```
 
 Run migrations
